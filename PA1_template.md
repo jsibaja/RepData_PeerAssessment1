@@ -1,8 +1,3 @@
----
-output:
-  html_document:
-    keep_md: yes
----
 Reproducible Research
 =====================
 
@@ -20,10 +15,9 @@ This assignment makes use of data from a personal activity monitoring device. Th
 
 ####Loading the data
 
-```{r load-data}
 
+```r
 dataFrame <- read.csv("./data/activity.csv", header = TRUE)
-
 ```
 
 
@@ -33,16 +27,16 @@ dataFrame <- read.csv("./data/activity.csv", header = TRUE)
 
 *Calculate the total number of steps taken per day*
 
-```{r tot-steps}
 
+```r
 stepsPerDay <- aggregate(steps ~ date, data = dataFrame, sum, na.rm=TRUE)
-
 ```
 
 *Make a histogram of the total number of steps taken each day*
 
-```{r hist-plot}
 
+```r
 hist(stepsPerDay$steps, main="Total number of steps per day", xlab="Number of steps", ylab= "Frequency in minutes", plot=TRUE)
-
 ```
+
+![](PA1_template_files/figure-html/hist-plot-1.png) 
