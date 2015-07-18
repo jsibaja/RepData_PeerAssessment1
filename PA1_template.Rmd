@@ -76,3 +76,46 @@ DataInterval[which.max(DataInterval$steps), ]$interval
 ```{r}
 sum(is.na(dataFrame$steps))
 ```
+
+*Devise a strategy for filling in all of the missing values in the dataset.*
+
+Based on the resuls from the calculation of the mean of daily activity. The values will be assigned to the NA values.
+
+
+*Create a new dataset that is equal to the original dataset but with the missing data filled in.*
+```{r}
+# Make a new dataset with the original data
+dataFrameFilled <- dataFrame
+count = 0 
+for (i in 1:nrow(dataFrameFilled))
+{
+  # Check for NA values
+  if (is.na(dataFrameFilled[i, ]$steps))
+  {
+    # Assign the steop value for the corresponding interval
+    dataFrameFilled[i, ]$steps <- DataInterval[DataInterval$interval== dataFrameFilled[i, ]$interval, ]$steps
+    count = count + 1
+  }
+}
+cat("Total of NA values were filled:", count, ".\n\r")
+```
+
+*Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.*
+
+```{r}
+stepsPerDay2 <- aggregate(steps ~ date, data = dataFrameFilled, sum, na.rm=TRUE)
+hist(stepsPerDay2$steps, main="Total number of steps per day", xlab="Number of steps", ylab= "Frequency in minutes", plot=TRUE)
+```
+*Calculate the mean and median*
+```{r}
+mean(stepsPerDay2$steps)
+median(stepsPerDay2$steps)
+```
+
+**Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?**
+
+The mean value is the same as the value before imputing the missing values to NA. The median shows a minor difference.
+
+###Are there differences in activity patterns between weekdays and weekends?
+
+*Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.*

@@ -83,7 +83,7 @@ DataInterval[which.max(DataInterval$steps), ]$interval
 ## [1] 835
 ```
 
-###Imputing missing values
+###Inputing missing values
 
 *Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)*
 
@@ -94,4 +94,60 @@ sum(is.na(dataFrame$steps))
 
 ```
 ## [1] 2304
+```
+
+*Devise a strategy for filling in all of the missing values in the dataset.*
+
+Based on the resuls from the calculation of the mean of daily activity. The values will be assigned to the NA values.
+
+
+*Create a new dataset that is equal to the original dataset but with the missing data filled in.*
+
+```r
+# Make a new dataset with the original data
+dataFrameFilled <- dataFrame
+count = 0 
+for (i in 1:nrow(dataFrameFilled))
+{
+  # Check for NA values
+  if (is.na(dataFrameFilled[i, ]$steps))
+  {
+    # Assign the steop value for the corresponding interval
+    dataFrameFilled[i, ]$steps <- DataInterval[DataInterval$interval== dataFrameFilled[i, ]$interval, ]$steps
+    count = count + 1
+  }
+}
+cat("Total of NA values were filled:", count, ".\n\r")
+```
+
+```
+## Total of NA values were filled: 2304 .
+## 
+```
+
+*Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.*
+
+
+```r
+stepsPerDay2 <- aggregate(steps ~ date, data = dataFrameFilled, sum, na.rm=TRUE)
+hist(stepsPerDay2$steps, main="Total number of steps per day", xlab="Number of steps", ylab= "Frequency in minutes", plot=TRUE)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+*Calculate the mean and median*
+
+```r
+mean(stepsPerDay2$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(stepsPerDay2$steps)
+```
+
+```
+## [1] 10766.19
 ```
