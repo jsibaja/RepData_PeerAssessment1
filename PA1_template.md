@@ -86,6 +86,8 @@ DataInterval[which.max(DataInterval$steps), ]$interval
 
 ###Inputing missing values
 
+Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data
+
 *Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)*
 
 
@@ -99,7 +101,8 @@ sum(is.na(dataFrame$steps))
 
 *Devise a strategy for filling in all of the missing values in the dataset.*
 
-Based on the resuls from the calculation of the mean of daily activity. The values will be assigned to the NA values.
+My strategy  will be based, on the to copy of the results from the mean calculations obtained on the "Data Interval" data frame.
+Each value on the same interval will be assigned to the NA value on the new DF.
 
 
 *Create a new dataset that is equal to the original dataset but with the missing data filled in.*
@@ -118,12 +121,6 @@ for (i in 1:nrow(dataFrameFilled))
     count = count + 1
   }
 }
-cat("Total of NA values were filled:", count, ".\n\r")
-```
-
-```
-## Total of NA values were filled: 2304 .
-## 
 ```
 
 *Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.*
@@ -135,7 +132,9 @@ hist(stepsPerDay2$steps, main="Total number of steps per day", xlab="Number of s
 ```
 
 ![](PA1_template_files/figure-html/hist-plot-filled-1.png) 
+
 *Calculate the mean and median*
+
 
 ```r
 mean(stepsPerDay2$steps)
