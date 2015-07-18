@@ -40,3 +40,58 @@ hist(stepsPerDay$steps, main="Total number of steps per day", xlab="Number of st
 ```
 
 ![](PA1_template_files/figure-html/hist-plot-1.png) 
+
+*Calculate and report the mean and median of the total number of steps taken per day*
+
+
+```r
+mean(stepsPerDay$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(stepsPerDay$steps)
+```
+
+```
+## [1] 10765
+```
+
+###What is the average daily activity pattern?
+
+
+*Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)*
+
+```r
+DataInterval <- aggregate(steps ~ interval, data = dataFrame, mean, na.rm=TRUE)
+with(DataInterval, plot(interval, steps,type="l", ylab= "Average Steps x Day", xlab="5 min Interval", col="blue"))
+title(main="Activity Pattern")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
+*Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
+
+```r
+DataInterval[which.max(DataInterval$steps), ]$interval
+```
+
+```
+## [1] 835
+```
+
+###Imputing missing values
+
+*Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)*
+
+
+```r
+sum(is.na(dataFrame$steps))
+```
+
+```
+## [1] 2304
+```
